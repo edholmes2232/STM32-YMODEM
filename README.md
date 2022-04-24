@@ -88,6 +88,17 @@ void RTOSThread(void *arg) {
 
 ```
 
+# Programming
+## Via serial:
+```bash
+$ picocom -b 115200 /dev/ttyS0 --send-cmd "sb -vv"
+```
+
+## Via telnet
+```bash
+$ socat pty,link=/dev/ttyS0,raw tcp:192.168.1.150:23
+$ picocom -b 115200 /dev/ttyS0 --send-cmd "sb -vv"
+```
 
 
 

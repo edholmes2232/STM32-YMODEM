@@ -45,7 +45,7 @@
  * @brief  Flash sector number
  * 
  */
-#define YMODEM_FLASH_SECTOR_NUM			(6) 
+#define YMODEM_FLASH_FIRST_SECTOR_NUM			(6) 
 
 /**
  * @brief  Num of flash sectors 
