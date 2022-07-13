@@ -382,7 +382,7 @@ static YM_RET_T YMODEM_ProcessDataPacket(void) {
 			break;
 		}
 
-		__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
+		__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR );// FLASH_FLAG_PGSERR);
 
 		const uint8_t *buffIn = (const uint8_t *)packet_data + YM_PACKET_HEADER;
 
@@ -453,7 +453,7 @@ static YM_RET_T YMODEM_ProcessFirstPacket(void) {
 				EraseInitStruct.VoltageRange	= FLASH_VOLTAGE_RANGE_3;
 				
 				HAL_FLASH_Unlock();
-				__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
+				__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR );// FLASH_FLAG_PGSERR);
 				if(HAL_FLASHEx_Erase(&EraseInitStruct, &sectorError) != HAL_OK) {
 					HAL_FLASH_Lock();
 					ret = YM_WRITE_ERR;
@@ -541,7 +541,6 @@ static YM_RET_T YMODEM_CheckCRC(void) {
 
 	uint16_t newCRC = SWAP16(crc16(packet_data+YM_PACKET_HEADER, packetSize));
 	if (newCRC != sourceCRC) {
-		__asm("nop");
 		return YM_RX_ERROR;
 	} else {
 		return YM_OK;
